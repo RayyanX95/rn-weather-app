@@ -15,7 +15,7 @@ export default function App() {
   const [coordinates, setCoordinates] = useState();
   const [weather, setWeather] = useState();
   const [isFontLoaded] = useFonts({
-    "Alata-Regular": require("./assets/font/Alata-Regular.ttf"),
+    "Alata-Regular": require("./assets/fonts/Alata-Regular.ttf"),
   });
 
   console.log(isFontLoaded);
@@ -55,7 +55,7 @@ export default function App() {
     >
       <SafeAreaProvider>
         <SafeAreaView style={s.container}>
-          {isFontLoaded && <Home />}
+          {isFontLoaded && weather && <Home weather={weather} />}
         </SafeAreaView>
       </SafeAreaProvider>
     </ImageBackground>
