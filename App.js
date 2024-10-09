@@ -50,7 +50,10 @@ export default function App() {
   }
 
   async function fetchCityByCoords(coords) {
+    console.log('coords: ', coords)
     const cityResponse = await MeteoAPI.fetchCityByCoords(coords);
+    console.log('cityResponse', cityResponse)
+
     setCity(cityResponse);
   }
 
@@ -78,7 +81,10 @@ export default function App() {
           <SafeAreaView style={s.container}>
             {isFontLoaded && weather && (
               <Stack.Navigator
-                screenOptions={{ headerShown: false }}
+                screenOptions={{
+                  headerShown: false,
+                  animation: "fade",
+                }}
                 initialRouteName="Home"
               >
                 <Stack.Screen name="Home">
