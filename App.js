@@ -6,7 +6,7 @@ import {
 } from "react-native-safe-area-context";
 import { Home } from "./pages/Home/Home";
 import { Forecasts } from "./pages/Forecasts/Forecasts.jsx";
-import { ImageBackground } from "react-native";
+import { Alert, ImageBackground } from "react-native";
 import backgroundImg from "./assets/background.png";
 import { useEffect, useState } from "react";
 import {
@@ -50,11 +50,19 @@ export default function App() {
   }
 
   async function fetchCityByCoords(coords) {
-    console.log('coords: ', coords)
     const cityResponse = await MeteoAPI.fetchCityByCoords(coords);
-    console.log('cityResponse', cityResponse)
-
     setCity(cityResponse);
+  }
+
+  async function fetchCoordsByCity(city) {
+    console.log('city', city)
+    try {
+      const coordsResponse = await MeteoAPI.fetchCoordsByCity(city);
+      console.log('coordsResponse', coordsResponse)
+      setCoordinates(coordsResponse);
+    } catch (err) {
+      Alert.alert("Aouch !", err);
+    }
   }
 
   async function getUserCoordinates() {
@@ -88,7 +96,13 @@ export default function App() {
                 initialRouteName="Home"
               >
                 <Stack.Screen name="Home">
-                  {() => <Home city={city} weather={weather} />}
+                  {() => (
+                    <Home
+                      city={city}
+                      weather={weather}
+                      onSubmitSearch={fetchCoordsByCity}
+                    />
+                  )}
                 </Stack.Screen>
                 <Stack.Screen name="Forecasts" component={Forecasts} />
               </Stack.Navigator>
